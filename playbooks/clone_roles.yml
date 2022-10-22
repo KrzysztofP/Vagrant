@@ -1,18 +1,21 @@
----
-- name: 
+- name: Cloning roles repository.
   hosts: all
+  connection: local
   become: true
+
   vars:
-    git_repository: "https://github.com/Panda-Academy-Core-2-0/Ansible_roles.git"
-    git_branch: "main"
+    git_repository: "https://github.com/KrzysztofP/Ansible_roles.git"
+    git_branch: "master"
+
   tasks:
-    - name: Create a directory if it does not exist
-      file:
-        path: /etc/ansible/roles
-        state: directory
-        mode: '0755'
-    - name: Git checkout
-      git:
-        repo: "{{ git_repository }}"
-        dest: "/etc/ansible/roles"
-        version: "{{ git_branch }}"
+  - name: Create roles directory.
+    file:
+      path: /etc/ansible/roles
+      state: directory
+      mode: '0755'
+  
+  - name: Checkout roles repository.
+    ansible.builtin.git:
+      repo: "{{ git_repository }}"
+      dest: /etc/ansible/roles
+      version: "{{ git_branch }}"
